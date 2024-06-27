@@ -1,6 +1,7 @@
 from openai import OpenAI
 import pandas as pd
 import pickle
+import streamlit as st
 
 
 client = OpenAI(api_key=st.secrets["openai"])
@@ -132,7 +133,6 @@ def get_answer(input):
 
 
 
-import streamlit as st
 
 st.title("LexBot")
 st.caption("Yo'l harakati qoidasiga doir barcha savollarinigizga javob oling")
