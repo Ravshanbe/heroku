@@ -5,7 +5,6 @@ import gradio as gr
 
 
 client = OpenAI(api_key='sk-proj-5z1VZLSKLlNauUBaO5GIT3BlbkFJGU4HksxXcdsVRJgwz3IY')
-client.files.list().data[0].id
 
 def remove_duplicates(original_list):
   seen = set()
@@ -101,7 +100,7 @@ def sred(question):
 
 
 def get_answer(input):
-  if len(input) > 12:
+  if len(input) > 0:
     thread = sred(input)
     run = client.beta.threads.runs.create_and_poll(
       thread_id=thread.id, assistant_id=assistant.id
@@ -117,15 +116,46 @@ def get_answer(input):
         cited_file = client.files.retrieve(file_citation.file_id)
         citations.append(f"{cited_file.filename[:-5]} [{index}]")
     links = ''
-    for i in citations:
-      links += f"https://lex.uz/docs/{i}\n"
-    deta = pd.read_json(f"data1/{citations[0][:-4]}.json")
-    final_answer = format_reference(deta) + message_content.value + "\n\n" + links
+
+
+    try:
+        for i in citations:
+          links += f"https://lex.uz/docs/{i}\n"
+        deta = pd.read_json(f"data1/{citations[0][:-4]}.json")
+        final_answer = format_reference(deta) + message_content.value + "\n\n" + links
+    except IndexError:
+        final_answer = message_content.value
     return final_answer
+
   else:
-    return "Savol juda kichkina(minimum 12 ta belgi kiriting)"
+    return "Savol juda kichkina(minimum 0 ta belgi kiriting)"
 
 
 
-lexbot = gr.Interface(fn=get_answer, inputs="text", outputs="text")
-lexbot.launch(share=True)
+
+import streamlit as st
+
+st.title("LexBot")
+st.caption("Yo'l harakati qoidasiga doir barcha savollarinigizga javob oling")
+
+
+if "messages" not in st.session_state:
+    thread = client.beta.threads.create(
+        messages=[
+            {
+                "role": "assistant",
+                "content": 'Sizga qanday yordam ber olaman',
+            }
+        ]
+    )
+
+if prompt := st.chat_input():
+    message = get_answer(prompt)
+    st.write(message)
+    # st.session_state.messages.append({"role": "user", "content": prompt})
+    # st.chat_message("user").write(prompt)
+    # response = client.chat.completions.create(model="gpt-3.5-turbo", messages=st.session_state.messages)
+    # msg = response.choices[0].message.content
+    # st.session_state.messages.append({"role": "assistant", "content": msg})
+    # st.chat_message("assistant").write(msg)
+
