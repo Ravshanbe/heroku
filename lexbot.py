@@ -1,7 +1,6 @@
 from openai import OpenAI
 import pandas as pd
 import pickle
-import gradio as gr
 
 
 client = OpenAI(api_key=openai)
