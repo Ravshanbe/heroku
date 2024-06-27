@@ -4,7 +4,7 @@ import pickle
 import gradio as gr
 
 
-client = OpenAI(api_key='sk-proj-5z1VZLSKLlNauUBaO5GIT3BlbkFJGU4HksxXcdsVRJgwz3IY')
+client = OpenAI(api_key=openai)
 
 def remove_duplicates(original_list):
   seen = set()
