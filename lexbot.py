@@ -3,7 +3,7 @@ import pandas as pd
 import pickle
 
 
-client = OpenAI(api_key=openai)
+client = OpenAI(api_key=st.secrets["openai"])
 
 def remove_duplicates(original_list):
   seen = set()
