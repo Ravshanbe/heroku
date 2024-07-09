@@ -2,6 +2,7 @@ from openai import OpenAI
 import pandas as pd
 import pickle
 import streamlit as st
+from transliterate import transliterate
 
 
 client = OpenAI(api_key=st.secrets["openai"])
@@ -100,8 +101,10 @@ def sred(question):
 
 
 def get_answer(input):
-  if len(input) > 0:
+  if len(input) > 5:
+    input = transliterate(input, 'latin')
     thread = sred(input)
+
     run = client.beta.threads.runs.create_and_poll(
       thread_id=thread.id, assistant_id=assistant.id
     )
@@ -128,7 +131,7 @@ def get_answer(input):
     return final_answer
 
   else:
-    return "Savol juda kichkina(minimum 0 ta belgi kiriting)"
+    return "Savol juda kichkina(minimum 6 ta belgi kiriting)"
 
 
 
