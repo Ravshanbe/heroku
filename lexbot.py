@@ -148,10 +148,13 @@ if "messages" not in st.session_state:
         ]
     )
 
-if prompt := st.chat_input():
+
+if prompt := st.chat_input("Savol qoldiring..."):
+    with st.chat_message("user"):
+      st.write(prompt)
     message = get_answer(prompt)
-    st.write(prompt)
-    st.write(message)
+    with st.chat_message("assistant"):
+      st.write(message)
     # st.session_state.messages.append({"role": "user", "content": prompt})
     # st.chat_message("user").write(prompt)
     # response = client.chat.completions.create(model="gpt-3.5-turbo", messages=st.session_state.messages)
