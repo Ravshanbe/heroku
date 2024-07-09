@@ -150,6 +150,7 @@ if "messages" not in st.session_state:
 
 if prompt := st.chat_input():
     message = get_answer(prompt)
+    st.write(prompt)
     st.write(message)
     # st.session_state.messages.append({"role": "user", "content": prompt})
     # st.chat_message("user").write(prompt)
