@@ -5,7 +5,7 @@ import streamlit as st
 from transliterate import transliterate
 
 
-client = OpenAI(api_key=st.secrets["openai"])
+client = OpenAI(api_key=st.secrets["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"])
 
 def remove_duplicates(original_list):
   seen = set()
