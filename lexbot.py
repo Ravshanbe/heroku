@@ -79,8 +79,8 @@ def format_reference(cited_file):
 
 
 assistant = client.beta.assistants.update(
-  assistant_id="asst_usCZKHhiACWEDsuJzRrh39Qj",
-  tool_resources={"file_search": {"vector_store_ids": ["vs_8KFZxVsCniMgwwagcWtBPhQr"]}},
+  assistant_id="asst_BPyNHTpeb5Tc0TQvMfTBxfvO",
+  tool_resources={"file_search": {"vector_store_ids": ["vs_tr2AgxgQfwW8zNMnxUr2KRmP"]}},
 )
 
 def get_last_word(text):
