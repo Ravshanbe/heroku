@@ -33,11 +33,14 @@ def get_answer(input):
       thread_id=thread.id, assistant_id=lexf.id
     )
     count=0
-    while (run.status != 'completed'):
+    status = run.status
+    while (status != 'completed'):
         if count == 100:
             break
         count+=1
         time.sleep(1)
+        status = run.status
+        
     messages = list(openai_client.beta.threads.messages.list(thread_id=thread.id, run_id=run.id))
     message_content = messages[0].content[0].text
     annotations = message_content.annotations
