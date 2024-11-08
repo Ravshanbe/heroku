@@ -55,14 +55,12 @@ st.caption("O'zbekiston qonun qoidalariga doir savollarga javob beraman.")
 
 
 if "messages" not in st.session_state:
-    thread = client.beta.threads.create(
-        messages=[
-            {
-                "role": "assistant",
-                "content": 'Sizga qanday yordam ber olaman',
-            }
-        ]
-    )
+    st.session_state["messages"]=[
+        {
+            "role": "assistant",
+            "content": 'Sizga qanday yordam ber olaman',
+        }
+    ]
 
 
 if prompt := st.chat_input("Savol qoldiring..."):
